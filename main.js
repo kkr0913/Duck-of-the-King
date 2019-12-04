@@ -1,3 +1,6 @@
+var json_url = 'https://api.myjson.com/bins/rbfo';
+var scrJSON;
+var scrJSON_copy;
 var bg;
 var game;
 var w, h;
@@ -20,6 +23,7 @@ var itemScore = 0;
 var killScore = 0;
 var myscore = '000000';
 var hiscore = '000000';
+var rdy = false;
 var admin = false;
 var title = true;
 var loading = false;
@@ -45,11 +49,17 @@ var obsArray = ['Hydrant', 'Trashcan', 'Trafficcone', 'Phonebooth', 'Car', 'Lamp
 var objJSON = {};
 var obsJSON = {};
 var enmJSON = {};
-var scrJSON = { 1: [9999, 'AAA'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] }
+// var scrJSON = { 1: [9999, 'AAA'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] }
 var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
 
 
 function preload() {
+	scrJSON = loadJSON(json_url, function() {
+		scrJSON_copy = scrJSON;
+		rdy = true;
+		if (rdy) { resetJSON(); }
+	});
+	
 	// Font
 	arcadeFont = loadFont('ARCADECLASSIC.otf');
 	
@@ -165,6 +175,7 @@ function preload() {
 
 
 function setup() {
+	// updateJSON('https://api.myjson.com/bins/rbfo', scrJSON);
 	createCanvas(windowWidth, windowHeight);
 	frameRate(60);
 	pixelDensity(0.4);
@@ -303,6 +314,8 @@ function setup() {
 
 
 function draw() {
+	if (!rdy) { return; }
+	
 	background(0, 191, 255);
 	
 	// Play Music
@@ -526,4 +539,42 @@ function setProb(p) {
 	if (rand > p) { result = 0; }
 	
 	return result;
+}
+
+
+// - - - Update External JSON with jQuery - - - //
+function updateJSON(url, json) {
+	var obj = json;
+	var data = JSON.stringify(obj);
+	$.ajax(
+		{
+			url:url,
+			type:"PUT",
+			data: data,
+			contentType:"application/json; charset=utf-8",
+			dataType:"json",
+			success: function(data, textStatus, jqXHR){
+			}
+		}
+	);
+}
+
+
+// - - - Check JSON - - - //
+function resetJSON() {
+	var bool = false;
+	var initial_scores = { 1: [9999, 'AAA'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] };
+	
+	for (var i = 1; i < 11; i++) {
+    if ((Object.keys(scrJSON).length != 10) || (typeof scrJSON[i] == 'undefined') || (typeof scrJSON[i][0] != 'number') || (typeof scrJSON[i][1] != 'string')) {
+	    bool = true;
+			break;
+		}
+		else if ((str(scrJSON[i][0]).length > 6) || (scrJSON[i][1].length != 3)) {
+			bool = true;
+			break;
+		}
+	}
+	
+	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
 }

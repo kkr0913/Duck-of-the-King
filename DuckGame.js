@@ -181,7 +181,7 @@ DuckGame.prototype.scoreScreen = function() {
 		}
 		else { text(scrJSON[k][1], width*0.65, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
 	}
-	if (nameEntered) { scrJSON[myrank] = [int(myscore), alpJSON.name]; }
+	if (nameEntered && (myrank <= 10)) { scrJSON_copy[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy); }
 	pop();
 }
 
@@ -236,16 +236,17 @@ DuckGame.prototype.calcLife = function() {
 // * DuckGame.updateRank() * //
 DuckGame.prototype.updateRank = function() {
 	for (var i = 1; i < 11; i++) {
-		if (int(myscore) > scrJSON[i][0]) {
+		if (int(myscore) > scrJSON_copy[i][0]) {
 			for (var j = 9; j >= i; j--) {
-				scrJSON[j+1] = [scrJSON[j][0], scrJSON[j][1]];
+				scrJSON_copy[j+1] = [scrJSON_copy[j][0], scrJSON_copy[j][1]];
 			}
-			scrJSON[i] = [int(myscore), alpJSON.name];
+			scrJSON_copy[i] = [int(myscore), alpJSON.name];
 			myrank = i;
 			break;
 		}
 	}
 	if (myrank > 10) { nameEntered = true; }
+	if (myrank <= 10) { updateJSON(json_url, scrJSON_copy); }
 }
 
 // * DuckGame.move() * //
