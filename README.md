@@ -1,7 +1,6 @@
 # - Duck of the King -
-
-
 An arcade-ish game, based on randomly generated title and features.
+
 
 Randomly Generated Features:
 - Title: Duck of the King
