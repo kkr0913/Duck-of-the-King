@@ -91,7 +91,7 @@ Enemy.prototype.checkCollision = function(mode, pos_l, pos_r, pos_t, pos_b) {
 		if (dist(this.duckPos.x + h*0.04, h*0.9 - this.duckPos.y - h*0.05, pos_l, pos_r) < pos_t) { dead = true; }
 	}
 	
-	else if (mode == 'CORNERS') {
+	else if (mode == 'EDGE') {
 	// Top
 	if ((this.vel.y/abs(this.vel.y) == -1) && (this.duckPos.y < pos_t*0.95) && (this.duckPos.y > pos_b*1.05) && (this.duckPos.x + h*0.08 > pos_l*1.05) && (this.duckPos.x < pos_r*0.95)) { dead = true; }
 	// Bottom
@@ -103,7 +103,7 @@ Enemy.prototype.checkCollision = function(mode, pos_l, pos_r, pos_t, pos_b) {
 	}
 	
 	else {
-		console.log("Invalid Argument: Enemy.checkCollision('CENTER' or 'CORNERS', float, float, float, float)");
+		console.log("Invalid Argument: Enemy.checkCollision('CENTER' or 'EDGE', float, float, float, float)");
 		return;
 	}
 }
@@ -156,7 +156,7 @@ Enemy.prototype.spawnRat = function(i, resetBool) {
 	if (motion[(2*frameCount)%motion.length]) { image(enmJSON.Rat[1], w-this.ratPos[i].x, this.ratPos[i].y-enmJSON.Rat[3]+10); }
 	if (resetBool && (this.ratPos[i].x - enmJSON.Rat[2] >= w)) { this.ratPos[i].set(new p5.Vector(0, h*0.9)); }
 	if (this.checkHit(w-this.ratPos[i].x+enmJSON.Rat[2]/2, this.ratPos[i].y-enmJSON.Rat[3]/2+5, h*0.04, mult*100)) { this.ratPos[i].x = 2*w; }
-	this.checkCollision('CORNERS', w-this.ratPos[i].x, w-this.ratPos[i].x+enmJSON.Rat[2], enmJSON.Rat[3], 0);
+	this.checkCollision('EDGE', w-this.ratPos[i].x, w-this.ratPos[i].x+enmJSON.Rat[2], enmJSON.Rat[3], 0);
 }
 
 
@@ -182,7 +182,7 @@ Enemy.prototype.spawnMet = function() {
 	if (round(this.metMotion[frameCount % this.metMotion.length]) != 0) {
 		if (this.checkHit(w-this.metPos.x+enmJSON.Met[1]/2, this.metPos.y-enmJSON.Met[2]/2+5, h*0.04, mult*300)) { this.metPos.x = 2*w; }
 	}
-	this.checkCollision('CORNERS', w-this.metPos.x, w-this.metPos.x+enmJSON.Met[1], enmJSON.Met[2], 0);
+	this.checkCollision('EDGE', w-this.metPos.x, w-this.metPos.x+enmJSON.Met[1], enmJSON.Met[2], 0);
 }
 
 
