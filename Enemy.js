@@ -52,28 +52,30 @@ function Enemy(pos, vel, proj) {
 }
 
 Enemy.prototype.spawn = function() {
+	var timing = spawnTime;
+	if (admin) { timing = [1, 1, 1, 1, 1, 1]; }
 	// Spawn Rat
-	if (progress > 1000) {
+	if (progress > timing[0]) {
 		for (var i in this.ratPos) { this.spawnRat(i, setProb(0.0005*(1+3*i))); }
 	}
 	// Spawn Met
-	if (progress > 1500) {
+	if (progress > timing[1]) {
 		this.spawnMet();
 	}
 	// Spawn Ball
-	if (progress > 2000) {
+	if (progress > timing[2]) {
 		this.spawnBall(guideline=false);
 	}
 	// Spawn Dust
-	if (progress > 3000) {
+	if (progress > timing[3]) {
 		for (var j in this.dustPos) { this.spawnDust(j, guideline=false); }
 	}
 	// Spawn Boomerang
-	if (progress > 5000) {
+	if (progress > timing[4]) {
 		this.spawnBoomerang(guideline=false);
 	}
 	// Spawn Wind
-	if (progress > 8000) {
+	if (progress > timing[5]) {
 		this.spawnWind(setProb(0.002)); // 0.002
 	}
 	// Score
@@ -153,7 +155,7 @@ Enemy.prototype.spawnRat = function(i, resetBool) {
 	if (!motion[(2*frameCount)%motion.length]) { image(enmJSON.Rat[0], w-this.ratPos[i].x, this.ratPos[i].y-enmJSON.Rat[3]+10); }
 	if (motion[(2*frameCount)%motion.length]) { image(enmJSON.Rat[1], w-this.ratPos[i].x, this.ratPos[i].y-enmJSON.Rat[3]+10); }
 	if (resetBool && (this.ratPos[i].x - enmJSON.Rat[2] >= w)) { this.ratPos[i].set(new p5.Vector(0, h*0.9)); }
-	if (this.checkHit(w-this.ratPos[i].x+enmJSON.Rat[2]/2, this.ratPos[i].y-enmJSON.Rat[3]/2+5, h*0.04, 200)) { this.ratPos[i].x = 2*w; }
+	if (this.checkHit(w-this.ratPos[i].x+enmJSON.Rat[2]/2, this.ratPos[i].y-enmJSON.Rat[3]/2+5, h*0.04, mult*100)) { this.ratPos[i].x = 2*w; }
 	this.checkCollision('CORNERS', w-this.ratPos[i].x, w-this.ratPos[i].x+enmJSON.Rat[2], enmJSON.Rat[3], 0);
 }
 
@@ -178,7 +180,7 @@ Enemy.prototype.spawnMet = function() {
 		this.metPos.set(new p5.Vector(w*random(-0.2, -1.0), h*0.9));
 	}
 	if (round(this.metMotion[frameCount % this.metMotion.length]) != 0) {
-		if (this.checkHit(w-this.metPos.x+enmJSON.Met[1]/2, this.metPos.y-enmJSON.Met[2]/2+5, h*0.04, 800)) { this.metPos.x = 2*w; }
+		if (this.checkHit(w-this.metPos.x+enmJSON.Met[1]/2, this.metPos.y-enmJSON.Met[2]/2+5, h*0.04, mult*300)) { this.metPos.x = 2*w; }
 	}
 	this.checkCollision('CORNERS', w-this.metPos.x, w-this.metPos.x+enmJSON.Met[1], enmJSON.Met[2], 0);
 }

@@ -130,6 +130,8 @@ DuckGame.prototype.selectScreen = function() {
 DuckGame.prototype.scoreScreen = function() {
 	background(0);
 	push();
+	imageMode(CENTER);
+	if (ee) { image(nyu, width*0.5, height*0.5); }
 	noFill();
 	stroke(255);
 	strokeWeight(3);
@@ -207,6 +209,7 @@ DuckGame.prototype.gameOver = function() {
 
 // * DuckGame.calcScore() * //
 DuckGame.prototype.calcScore = function() {
+	for (i = spawnTime.length-1; i >= 0; i--) { if (progress >= spawnTime[i]) { mult = i+1; break; } }
 	if (greenworld) { myscore = progress + itemScore + killScore; }
 	else { myscore = floor(progress/10) + itemScore + killScore; }
 	if (myscore < 0) { progress = 0; itemScore = 0; killScore = 0; myscore = 0; }
@@ -432,6 +435,7 @@ DuckGame.prototype.start = function() {
 DuckGame.prototype.reset = function() {
 	title = true;
 	gg = false;
+	ee = false;
 	nameEntered = false;
 	card_idx = 0;
 	sel_idx = 4;

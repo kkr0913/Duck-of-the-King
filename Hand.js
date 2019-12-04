@@ -28,7 +28,7 @@ function Hand(pos, vel, proj) {
 	this.mcbox = ['Hamburger', 'Fries', 'Coke'];
 	this.kfcbox = ['Chicken', 'Fries', 'Coke'];
 	this.objects = [this.rare, this.box, this.box, this.food, this.food, this.edible, this.edible, this.edible, this.garbage, this.garbage, this.garbage];
-	this.scores = ['?', '?', '?', 2000, 2000, 500, 500, 500, -100, -100, -100];
+	this.scores = ['?', '?', '?', 1000, 1000, 200, 200, 200, -100, -100, -100];
 	/*
 	Rare: radioactive, heart
 	Box: mcdonalds, kfc, random
@@ -121,8 +121,8 @@ Hand.prototype.checkCollision = function(pos_x, pos_y, d) {
 		else if (this.obj == 'Heart') {
 			if (mylife != 3) { mylife += 1; lifeup.play(); }
 			if (mylife == 3) {
-				var scr1 = 5000;
-				if (greenworld) { scr1 = 50000; }
+				var scr1 = mult*5000;
+				if (greenworld) { scr1 = mult*50000; }
 				this.scrPos.set(new p5.Vector(this.objPos.x, h*0.9-this.objPos.y-h*0.05));
 				this.scrtxt = str(scr1);
 				this.scrclr = random(scoreColors);
@@ -133,9 +133,10 @@ Hand.prototype.checkCollision = function(pos_x, pos_y, d) {
 		}
 		else if (typeof this.scores[this.objType] == 'number') {
 			var scr2 = this.scores[this.objType];
-			if (greenworld && (scr2 > 0)) { scr2 = 10*this.scores[this.objType]; }
+			if (scr2 > 0) { scr2 = mult*scr2; }
+			if (greenworld && (scr2 > 0)) { scr2 = 10*mult*this.scores[this.objType]; }
 			this.scrPos.set(new p5.Vector(this.objPos.x, h*0.9-this.objPos.y-h*0.05));
-			if (this.scores[this.objType] < 0) { this.scrtxt = random(['yuck', 'gross', 'disgusting', 'garbage', 'eww', 'ewwwww']); yuck.play(); }
+			if (scr2 < 0) { this.scrtxt = random(['yuck', 'gross', 'disgusting', 'garbage', 'eww', 'ewwwww']); yuck.play(); }
 			else { this.scrtxt = str(scr2); coin.play(); }
 			this.scrclr = random(scoreColors);
 			this.scoreDisplay = true;

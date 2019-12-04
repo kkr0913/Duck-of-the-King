@@ -1,6 +1,7 @@
 var bg;
 var game;
 var w, h;
+var string = '';
 var option_idx = 0;
 var card_idx = 0;
 var sel_idx = 4;
@@ -9,6 +10,7 @@ var cd_t0 = -10000;
 var cd = 3000;
 var weapon = 0;
 var progress = 0;
+var mult = 1;
 var motion0, motion1, motion;
 var mylife = 3;
 var myrank = 100;
@@ -17,6 +19,7 @@ var itemScore = 0;
 var killScore = 0;
 var myscore = '000000';
 var hiscore = '000000';
+var admin = false;
 var title = true;
 var loading = false;
 var help = false;
@@ -32,8 +35,10 @@ var greenworld = false;
 var inv = false;
 var dead = false;
 var gg = false;
+var ee = false;
 var rankUpdated = true;
 var nameEntered = false;
+var spawnTime = [1000, 1500, 2000, 3000, 5000, 8000];
 var scoreColors = [[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 153, 0], [255, 255, 59], [204, 0, 102], [102, 0, 204]];
 var obsArray = ['Hydrant', 'Trashcan', 'Trafficcone', 'Phonebooth', 'Car', 'Lamppost', 'Construction'];
 var objJSON = {};
@@ -76,6 +81,7 @@ function preload() {
 	c = loadImage('c.png');
 	mutedIcon = loadImage('muted.png');
 	unmutedIcon = loadImage('unmuted.png');
+	nyu = loadImage('nyu.png');
 	bg = loadImage('bg.png');
 	brick = loadImage('brick.png');
 	bricksquare = loadImage('bricksquare.png');
@@ -216,6 +222,7 @@ function setup() {
 	c.resize(h*0.04, h*0.04);
 	mutedIcon.resize(height*0.05, height*0.05);
 	unmutedIcon.resize(height*0.05, height*0.05);
+	nyu.resize(height*0.8, height*0.8);
 	bg.resize(w+2, h);
 	brick.resize(w+2, h*0.1+5);
 	cloud.resize(h*0.4, h*0.15);
@@ -420,6 +427,14 @@ function mouseClicked() {
 
 // - - - Key Press Event - - - //
 function keyPressed() {
+	if ((keyCode >= 65) && (keyCode <= 90)) {
+		if (string.length < 3) { string += key.toUpperCase(); }
+	}
+	if (keyCode === ENTER) {
+		if (string == 'KYU') { admin = !admin; }
+		string = '';
+	}
+	
 	if (title) {
 		title = false;
 		loading = true;
@@ -455,12 +470,18 @@ function keyPressed() {
 			if (key === "ArrowRight") { if (alp_idx == 2) { alp_idx = 2; } else { alp_idx += 1; alp.play(); } }
 			if (key === "ArrowUp") { if (alpJSON[alp_idx] == 90) { alpJSON[alp_idx] = 65; } else { alpJSON[alp_idx] += 1; alp.play(); } }
 			if (key === "ArrowDown") { if (alpJSON[alp_idx] == 65) { alpJSON[alp_idx] = 90; } else { alpJSON[alp_idx] -= 1; alp.play(); } }
-			if (keyCode === 32) { alpJSON.name = char(alpJSON[0]) + char(alpJSON[1]) + char(alpJSON[2]); nameEntered = true; enter.play(); }
+			if (keyCode === 32) {
+				alpJSON.name = char(alpJSON[0]) + char(alpJSON[1]) + char(alpJSON[2]);
+				nameEntered = true;
+				if (alpJSON.name == 'NYU') { ee = true; }
+				enter.play();
+			}
+		}
+		else if (ee) {
+			game.reset();
 		}
 		else {
-			if (keyCode === 32) {
-				game.reset();
-			}
+			game.reset();
 		}
 	}
 	else {
@@ -475,7 +496,7 @@ function keyPressed() {
 			if (weapon == 2) { poop.play(); }
 			if (weapon == 3) { quack.play(); }
 		}
-		if (((key === 'z') || (key === 'Z')) && !cooldown) { if (weapon == 3) { weapon = 0; } else { weapon += 1; } }
+		if (admin && ((key === 'z') || (key === 'Z')) && !cooldown) { if (weapon == 3) { weapon = 0; } else { weapon += 1; } }
 	}
 }
 
