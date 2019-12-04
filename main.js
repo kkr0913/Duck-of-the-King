@@ -429,14 +429,24 @@ function mouseClicked() {
 // - - - Key Press Event - - - //
 function keyPressed() {
 	if ((keyCode >= 65) && (keyCode <= 90)) {
-		if (string.length < 3) { string += key.toUpperCase(); }
+		if (string.length < 7) { string += key.toLowerCase(); }
 	}
 	if (keyCode === ENTER) {
-		if (string == 'KYU') { admin = !admin; }
+		if (!admin) {
+			if (string == 'rlarbfo') { admin = true; }
+		}
+		if (admin) {
+			if (string == 'reset') { game.reset(); }
+			if (string == 'die') { game.physics.removeForce(); mylife = 0; game.dead_t0 = millis(); game.dead_h0 = game.pos.y; over.play(); }
+			if (string == 'gg') { gg = true; rankUpdated = false; }
+			if (string == 'dulk') { greenworld = true; game.hand.getGreenT = true; woww.play(); }
+			if (string == 'ouch') { game.inv_t0 = millis(); ouch.play(); }
+		}
 		string = '';
 	}
 	
 	if (title) {
+		if (keyCode === ENTER) { return; }
 		title = false;
 		loading = true;
 		trans.play();

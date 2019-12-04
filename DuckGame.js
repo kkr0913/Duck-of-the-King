@@ -221,14 +221,12 @@ DuckGame.prototype.calcScore = function() {
 
 // * DuckGame.calcLife() * //
 DuckGame.prototype.calcLife = function() {
-	if (dead && (mylife > 0) && !inv && !greenworld) {
+	if (dead && (mylife > 0) && !inv && !greenworld && !admin) {
 		mylife -= 1;
-		this.inv_t0 = millis();
-		if (mylife != 0) { this.pos.set(new p5.Vector(0, h*0.8)); }
+		if (mylife != 0) { this.inv_t0 = millis(); ouch.play(); }
 		if (mylife == 0) { this.dead_t0 = millis(); this.dead_h0 = this.pos.y; over.play(); }
 		this.physics.removeForce();
 		dead = false;
-		ouch.play();
 	}
 	if ((millis()-this.inv_t0 < 500) && (mylife > 0)) { this.pos.set(new p5.Vector(0, h*0.8)); this.physics.removeForce(); midair = true; }
 	if ((millis()-this.inv_t0 <= 3000) && (mylife > 0)) { inv = true; }
@@ -340,6 +338,11 @@ DuckGame.prototype.display = function() {
 	translate(((this.bgPos.x-w) % (2*w)) + w, 0);
 	image(bg, 0, 0);
 	pop();
+	push();
+	fill(128, 128);
+	textSize(200);
+	if (admin) { text('rlarbfo     mode', 0, 0, w, h*0.9); }
+	pop();
 	
 	// Ground
 	push();
@@ -364,7 +367,7 @@ DuckGame.prototype.display = function() {
 		if (motion[(5*frameCount)%motion.length]) { tint(0, 204, 0); }
 	}
 	else { noTint(); }
-	if (this.lookingAt == -1) {//round(this.physics.vel.x/abs(this.physics.vel.x) == -1)) {
+	if (this.lookingAt == -1) {
 		scale(-1, 1);
 		translate(-h*0.08, 0);
 	}
@@ -413,7 +416,7 @@ DuckGame.prototype.display = function() {
 
 // * DuckGame.music() * //
 DuckGame.prototype.music = function() {
-	if ((title || loading)) { rank.stop(); if (!intro.isPlaying()) { intro.loop(); } }
+	if ((title || loading)) { main.stop(); rank.stop(); if (!intro.isPlaying()) { intro.loop(); } }
 	else if (card) { intro.stop(); }
 	else if (!gg && !title) { if (!main.isPlaying()) { main.loop(); } }
 	else if (gg) { main.stop(); if (!rank.isPlaying()) { rank.loop(); } }
@@ -436,6 +439,7 @@ DuckGame.prototype.start = function() {
 
 // * DuckGame.reset() * //
 DuckGame.prototype.reset = function() {
+	admin = false;
 	title = true;
 	gg = false;
 	ee = false;
@@ -446,12 +450,14 @@ DuckGame.prototype.reset = function() {
 	myrank = 100;
 	mylife = 3;
 	progress = 0;
+	progScore = 0;
 	itemScore = 0;
 	killScore = 0;
 	alpJSON[0] = 65;
 	alpJSON[1] = 65;
 	alpJSON[2] = 65;
 	alpJSON.name = 'AAA';
+	string = '';
 	this.pos.set(new p5.Vector(0, 0));
 	this.hand.objPos.set(new p5.Vector(-w, 0));
 	this.obstacle1.pos.set(new p5.Vector(2*w, h*0.9));
