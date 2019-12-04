@@ -15,6 +15,7 @@ var motion0, motion1, motion;
 var mylife = 3;
 var myrank = 100;
 var alp_idx = 0;
+var progScore = 0;
 var itemScore = 0;
 var killScore = 0;
 var myscore = '000000';

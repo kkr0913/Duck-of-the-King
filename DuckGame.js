@@ -193,7 +193,7 @@ DuckGame.prototype.gameOver = function() {
 		stroke(0);
 		strokeWeight(5);
 		textSize(100);
-		text("g a m e\no v e r", 0, 0, w, h*0.8);
+		text("g  a  m  e\no  v  e  r", 0, 0, w, h*0.8);
 		pop();
 		this.physics.removeForce();
 		this.pos.set(this.pos.copy());
@@ -210,10 +210,11 @@ DuckGame.prototype.gameOver = function() {
 // * DuckGame.calcScore() * //
 DuckGame.prototype.calcScore = function() {
 	for (i = spawnTime.length-1; i >= 0; i--) { if (progress >= spawnTime[i]) { mult = i+1; break; } }
-	if (greenworld) { myscore = progress + itemScore + killScore; }
-	else { myscore = floor(progress/10) + itemScore + killScore; }
-	if (myscore < 0) { progress = 0; itemScore = 0; killScore = 0; myscore = 0; }
+	// if (greenworld) { myscore = progress + itemScore + killScore; }
+	myscore = floor(progScore/10) + itemScore + killScore;
+	if (myscore < 0) { progScore = 0; itemScore = 0; killScore = 0; myscore = 0; }
 	if (int(myscore) >= 999999) { myscore = 999999; }
+	if (admin) { myscore = 0; }
 	myscore = nf(myscore, 6);
 	hiscore = nf(scrJSON[1][0], 6);
 }
@@ -268,6 +269,8 @@ DuckGame.prototype.move = function() {
 		this.gndPos.x -= this.physics.vel.x;
 		this.projPos.x -= this.physics.vel.x;
 		progress += 1;
+		if (greenworld) { progScore += 10; }
+		else { progScore += 1; }
 	}
 	
 	// Jump & Glide
