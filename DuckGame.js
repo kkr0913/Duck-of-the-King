@@ -472,3 +472,4 @@ DuckGame.prototype.reset = function() {
 	this.enemy.boomReturned = true;
 	this.physics.removeForce();
 }
+//

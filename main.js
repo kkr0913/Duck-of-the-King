@@ -578,3 +578,4 @@ function resetJSON() {
 	
 	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
 }
+//
