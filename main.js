@@ -2,6 +2,7 @@ var json_url = 'https://api.myjson.com/bins/rbfo';
 var scrJSON;
 var scrJSON_copy;
 var bg;
+var f1, f2, f3, f4;
 var game;
 var w, h;
 var string = '';
@@ -49,7 +50,6 @@ var obsArray = ['Hydrant', 'Trashcan', 'Trafficcone', 'Phonebooth', 'Car', 'Lamp
 var objJSON = {};
 var obsJSON = {};
 var enmJSON = {};
-// var scrJSON = { 1: [9999, 'AAA'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] }
 var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
 
 
@@ -90,6 +90,7 @@ function preload() {
 	
 	// Image (general)
 	c = loadImage('c.png');
+	mosaic = loadImage('mosaic.png');
 	mutedIcon = loadImage('muted.png');
 	unmutedIcon = loadImage('unmuted.png');
 	nyu = loadImage('nyu.png');
@@ -175,14 +176,14 @@ function preload() {
 
 
 function setup() {
-	// updateJSON('https://api.myjson.com/bins/rbfo', scrJSON);
 	createCanvas(windowWidth, windowHeight);
 	frameRate(60);
-	pixelDensity(0.4);
+	pixelDensity(0.3);
 	textAlign(CENTER, CENTER);
 	textSize(60);
 	textFont(arcadeFont);
 	noStroke();
+	makeFrame();
 	
 	// Set Game Screen Width & Height
 	w = width - height*0.1;
@@ -415,13 +416,12 @@ function draw() {
 	pop();
 	
 	// Frame
+	image(f1, 0, height*0.06);
+	image(f2, 0, height*0.95);
+	image(f3, 0, height*0.11-1, height*0.05, height*0.89);
+	image(f4, width-height*0.05, height*0.11-1, height*0.05, height*0.89);
 	push();
 	translate(0, height*0.06);
-	fill(76, 0, 153);
-	rect(0, 0, height*0.05, height*0.94);
-	rect(width-height*0.05, 0, height*0.05, height*0.94);
-	rect(0, 0, width, height*0.05);
-	rect(0, height*0.89, width, height*0.05);
 	if (muted) { image(mutedIcon, width-height*0.05, 5); }
 	if (!muted) { image(unmutedIcon, width-height*0.05, 5); }
 	pop();
@@ -433,7 +433,7 @@ function mouseClicked() {
 	if (title || loading || card || gg ||(mouseX < width - height*0.05) || (mouseY < height*0.06 + 5) || (mouseY > height*0.11 + 5)) {
 		return;
 	}
-	// muted = !muted;
+	muted = !muted;
 	// if (muted) { main.volume(0); }
 	// if (!muted) { main.volume(1); }
 }
@@ -542,6 +542,19 @@ function setProb(p) {
 }
 
 
+// - - - Make Frame - - - //
+function makeFrame() {
+	if (width >= height) { mosaic.resize(width, width); }
+	if (width < height) { mosaic.resize(height, height); }
+	image(mosaic, 0, 0);
+	f1 = get(0, height*0.06, width, height*0.05);
+	f2 = get(0, height*0.95, width, height*0.05);
+	f3 = get(0, height*0.11, height*0.05, height*0.89*1.01);
+	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89*1.01);
+	background(0, 191, 255);
+}
+
+
 // - - - Update External JSON with jQuery - - - //
 function updateJSON(url, json) {
 	var obj = json;
@@ -578,4 +591,3 @@ function resetJSON() {
 	
 	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
 }
-//
