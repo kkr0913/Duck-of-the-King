@@ -413,14 +413,6 @@ DuckGame.prototype.display = function() {
 		pop();
 		// if (weapon == 3) { push(); fill('red'); circle(this.projPos.x, h*0.9-this.projPos.y, h*0.03); pop(); }
 	}
-	
-	// Stroke
-	push();
-	noFill();
-	stroke(0);
-	strokeWeight(4);
-	rect(0, 0, w-2, h-2);
-	pop();
 }
 
 // * DuckGame.music() * //

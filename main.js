@@ -425,6 +425,13 @@ function draw() {
 	if (muted) { image(mutedIcon, width-height*0.05, 5); }
 	if (!muted) { image(unmutedIcon, width-height*0.05, 5); }
 	pop();
+	push();
+	translate(height*0.05, height*0.11);
+	noFill();
+	stroke(0);
+	strokeWeight(3);
+	rect(0, 0, w, h);
+	pop();
 }
 
 
