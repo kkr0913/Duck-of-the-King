@@ -434,8 +434,7 @@ function mouseClicked() {
 		return;
 	}
 	muted = !muted;
-	// if (muted) { main.volume(0); }
-	// if (!muted) { main.volume(1); }
+	muteAll();
 }
 
 
@@ -552,6 +551,37 @@ function makeFrame() {
 	f3 = get(0, height*0.11, height*0.05, height*0.89*1.01);
 	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89*1.01);
 	background(0, 191, 255);
+}
+
+
+// - - - Mute / Unmute - - - //
+function muteAll() {
+	var v;
+	if (muted) { v = 0; }
+	else { v = 1; }
+	intro.setVolume(v);
+	flip.setVolume(v);
+	main.setVolume(v);
+	rank.setVolume(v);
+	menu1.setVolume(v);
+	menu2.setVolume(v);
+	trans.setVolume(v);
+	mariojump.setVolume(v);
+	ouch.setVolume(v);
+	yuck.setVolume(v);
+	woww.setVolume(v);
+	coin.setVolume(v);
+	lifeup.setVolume(v);
+	over.setVolume(v);
+	alp.setVolume(v);
+	enter.setVolume(v);
+	bubble.setVolume(v);
+	popped.setVolume(v);
+	swish.setVolume(v);
+	stonehit.setVolume(v);
+	poop.setVolume(v);
+	pooped.setVolume(v);
+	quack.setVolume(v);
 }
 
 
