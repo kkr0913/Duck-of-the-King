@@ -54,6 +54,7 @@ var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
 
 
 function preload() {
+	// External JSON for the Top Ranks
 	scrJSON = loadJSON(json_url, function() {
 		scrJSON_copy = scrJSON;
 		rdy = true;
@@ -316,12 +317,12 @@ function setup() {
 
 function draw() {
 	if (!rdy) { return; }
-	
 	background(0, 191, 255);
 	
 	// Play Music
 	game.music();
 	
+	// Title & Loading Screen Common
 	if (title || loading) {
 		image(cloud, (width*(0.12+frameCount*0.001))%(width+h*0.4)-h*0.4, height*0.12);
 		image(cloud, (width*(0.7+frameCount*0.0005))%(width+h*0.4)-h*0.4, height*0.05);
@@ -377,6 +378,7 @@ function draw() {
 		return;
 	}
 	
+	// Score Screen
 	if (gg) {
 		game.scoreScreen();
 		return;

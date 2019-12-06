@@ -1,3 +1,8 @@
+// * * * * * * * * * * *  * * * * * * * * //
+// - - - - - - Obstacle Class - - - - - - //
+// - - - Manage Obstacle Generation - - - //
+// * * * * * * * * *  * * * * * * * * * * //
+
 function Obstacle(pos, vel, proj, obj, objvel) {
 	this.duckPos = pos;
 	this.projPos = proj;
@@ -11,6 +16,7 @@ function Obstacle(pos, vel, proj, obj, objvel) {
 	this.genBool = 0;
 }
 
+// * Generate Obstacle * //
 Obstacle.prototype.generate = function() {
 	if (abs(map(this.vel.x, 0, w*0.001, 0, 100)) > 80) { this.genBool = setProb(random(0.001, 0.002)); }
 	if (this.genBool) { this.reset(); }
@@ -21,6 +27,7 @@ Obstacle.prototype.generate = function() {
 	this.checkCollision3(this.objPos, w-this.pos.x, w-this.pos.x+this.obsW, h*0.9-this.pos.y+this.obsH-10);
 }
 
+// * Display Obstacle * //
 Obstacle.prototype.display = function() {
 	if ((this.vel.x > 0) && (this.duckPos.x > w*0.4)) { this.pos.x += this.vel.x; }
 	if (this.obs == '') { return; }
@@ -30,6 +37,7 @@ Obstacle.prototype.display = function() {
 	image(obsJSON[this.obs][0], w-this.pos.x, this.pos.y-this.obsH+10);
 }
 
+// * Reset Obstacle * //
 Obstacle.prototype.reset = function() {
 	if (this.pos.x - this.obsW >= w) {
 		this.obs = random(obsArray);
@@ -40,7 +48,7 @@ Obstacle.prototype.reset = function() {
 	}
 }
 
-// Check Collision with Duck
+// * Check Collision with Duck * //
 Obstacle.prototype.checkCollision1 = function(pos_l, pos_r, pos_t, pos_b) {
 	// Top
 	if ((this.vel.y/abs(this.vel.y) == -1) && (this.duckPos.y <= pos_t) && (this.duckPos.y >= pos_b) && (this.duckPos.x + h*0.08 > pos_l) && (this.duckPos.x < pos_r)) {
@@ -57,7 +65,7 @@ Obstacle.prototype.checkCollision1 = function(pos_l, pos_r, pos_t, pos_b) {
 	}
 }
 
-// Check Collision with Projectile
+// * Check Collision with Projectiles * //
 Obstacle.prototype.checkCollision2 = function(vec, pos_l, pos_r, pos_t, pos_b) {
 	if(!cooldown) {
 		return false;
@@ -90,7 +98,7 @@ Obstacle.prototype.checkCollision2 = function(vec, pos_l, pos_r, pos_t, pos_b) {
 	}
 }
 
-// Check Collision with Items
+// * Check Collision with Items * //
 Obstacle.prototype.checkCollision3 = function(vec, pos_l, pos_r, pos_t) {
 	// Top
 	if ((vec.y <= pos_t+h*0.03-10) && (vec.x > pos_l) && (vec.x < pos_r)) { vec.y = pos_t+h*0.03-10; this.objVel.set(new p5.Vector(0, 0)); }

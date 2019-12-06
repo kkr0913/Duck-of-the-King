@@ -1,3 +1,8 @@
+// * * * * * * * *  * * * * * * * * * //
+// - - - - - Enemy Class - - - - - -  //
+// - - - Manage Enemy Spawning  - - - //
+// * * * * * *  * * * * * * * * * * * //
+
 function Enemy(pos, vel, proj) {
 	// General
 	this.physics = new Physics(pos);
@@ -51,6 +56,7 @@ function Enemy(pos, vel, proj) {
 	this.wind_t0 = -5000;
 }
 
+// * Spawn Enemies According to Progress * //
 Enemy.prototype.spawn = function() {
 	var timing = spawnTime;
 	if (admin) { timing = [1, 1, 1, 1, 1, 1]; }
@@ -83,14 +89,16 @@ Enemy.prototype.spawn = function() {
 	this.displayScore();
 }
 
+// * Check Collision with Duck * //
 Enemy.prototype.checkCollision = function(mode, pos_l, pos_r, pos_t, pos_b) {
-	if (inv || greenworld) { return; }
+	if (inv || greenworld || admin) { return; }
 	
-	// ('CENTER', pos_x, pos_y, radius, unused)
+	// arguments: ('CENTER', pos_x, pos_y, distance, unused)
 	if (mode == 'CENTER') {
 		if (dist(this.duckPos.x + h*0.04, h*0.9 - this.duckPos.y - h*0.05, pos_l, pos_r) < pos_t) { dead = true; }
 	}
 	
+	// arguments: ('CENTER', pos_l, pos_r, pos_t, pos_b)
 	else if (mode == 'EDGE') {
 	// Top
 	if ((this.vel.y/abs(this.vel.y) == -1) && (this.duckPos.y < pos_t*0.95) && (this.duckPos.y > pos_b*1.05) && (this.duckPos.x + h*0.08 > pos_l*1.05) && (this.duckPos.x < pos_r*0.95)) { dead = true; }
@@ -102,12 +110,14 @@ Enemy.prototype.checkCollision = function(mode, pos_l, pos_r, pos_t, pos_b) {
 	if ((this.vel.x/abs(this.vel.x) == -1) && (this.duckPos.y < pos_t*0.95) && (this.duckPos.y + h*0.1 > pos_b*1.05) && (this.duckPos.x < pos_r*0.95) && (this.duckPos.x >= pos_r*0.94)) { dead = true; }
 	}
 	
+	// invalid arguments
 	else {
 		console.log("Invalid Argument: Enemy.checkCollision('CENTER' or 'EDGE', float, float, float, float)");
 		return;
 	}
 }
 
+// * Check Collision with Projectiles * //
 Enemy.prototype.checkHit = function(pos_x, pos_y, d, score) {
 	if(!cooldown) {
 		return false;
@@ -131,11 +141,13 @@ Enemy.prototype.checkHit = function(pos_x, pos_y, d, score) {
 	}
 }
 
+// * Score Calculation * //
 Enemy.prototype.calcScore = function() {
 	killScore += this.scr;
 	this.scr = 0;
 }
 
+// * Earned Score Display * //
 Enemy.prototype.displayScore = function() {
 	if (this.scoreDisplay) { this.scr_t0 = millis(); this.scoreDisplay = false; }
 	if (millis() - this.scr_t0 < 2000) {

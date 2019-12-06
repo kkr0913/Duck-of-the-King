@@ -1,3 +1,8 @@
+// * * * * * * * * * * * * * * * * * * //
+// - - - - -  Physics Class  - - - - - //
+// - - - Manage Movement Physics - - - //
+// * * * * * * * * * * * * * * * * * * //
+
 function Physics(initialVec) {
 	this.mass = 1;                                // mass
 	this.g = -0.006;                              // gravitational acceleration
@@ -8,11 +13,15 @@ function Physics(initialVec) {
 	this.ratio = createVector(w*0.001, h*0.001);  // make the vector a multiple of width & height
 }
 
+// * Update Vector by Applying Zero Vector * //
 Physics.prototype.update = function() {
+	// applyForce function must be called in a loop for the vector to be updated
 	this.applyForce(new p5.Vector(0, 0));
 }
 
+// * Constant Forces * //
 Physics.prototype.constantForce = function() {
+	// forces
 	this.gravity();
 	this.normalForce();
 	this.friction();
@@ -21,6 +30,7 @@ Physics.prototype.constantForce = function() {
 	if (this.pos.x > w*0.4) { this.pos.x = w*0.4; }
 }
 
+// * Apply a Force * //
 Physics.prototype.applyForce = function(force, bool=true) {
   var pos_vec = createVector(0, 0);
 	var a = force.div(this.mass);
@@ -34,11 +44,13 @@ Physics.prototype.applyForce = function(force, bool=true) {
   this.acc.set(0, 0);
 }
 
+// * Remove All Forces * //
 Physics.prototype.removeForce = function() {
 	this.vel.set(new p5.Vector(0, 0));
 	this.acc.set(new p5.Vector(0, 0));
 }
-	
+
+// * Apply Force Horizontally * //
 Physics.prototype.moveX = function(x) {
 	var v = createVector(x, 0);
 	v.x *= this.ratio.x;
@@ -47,11 +59,13 @@ Physics.prototype.moveX = function(x) {
 	if (abs(this.vel.x) > w * 0.001) { this.vel.x = round(this.vel.x/abs(this.vel.x)) * w * 0.001; }
 }
 
+// * Gravity * //
 Physics.prototype.gravity = function(s=1) {
 	var gravity = createVector(0, this.mass * this.g * this.pos.y * s);
 	this.applyForce(gravity);
 }
 
+// * Normal Force * //
 Physics.prototype.normalForce = function() {
   if (this.pos.y < 0) {
     this.vel.y *= 0;
@@ -59,6 +73,7 @@ Physics.prototype.normalForce = function() {
   }
 }
 
+// * Friction * //
 Physics.prototype.friction = function() {
   if ((!keyIsDown(LEFT_ARROW)) && (!(keyIsDown(RIGHT_ARROW)) && (!midair))) {
 		var Ff = createVector(0, 0);

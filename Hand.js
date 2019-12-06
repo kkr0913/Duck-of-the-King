@@ -1,3 +1,8 @@
+// * * * * * * * * * * * * * * * * * //
+// - - - - -   Hand Class  - - - - - //
+// - - - Manage Item Throwings - - - //
+// * * * * * * * * * * * * * * * * * //
+
 function Hand(pos, vel, proj) {
 	this.duckPos = pos;
 	this.projPos = proj;
@@ -19,6 +24,13 @@ function Hand(pos, vel, proj) {
 	this.scrclr = '';
 	this.obj = '';
 	this.objType = floor(random(0, 11));
+	/*
+	Rare: radioactive, heart
+	Box: mcdonalds, kfc, random
+	Food: apple, cherry, fish
+	Edible: hamburger, pizza, chicken, fries, coke, eatenapple
+	Garbage: shoe, can, trash, money
+	*/
 	this.rare = ['Radioactive', 'Heart'];
 	this.box = ['Mcdonalds', 'Kfc', 'Randombox'];
 	this.food = ['Apple', 'Cherry', 'Fish'];
@@ -29,15 +41,9 @@ function Hand(pos, vel, proj) {
 	this.kfcbox = ['Chicken', 'Fries', 'Coke'];
 	this.objects = [this.rare, this.box, this.box, this.food, this.food, this.edible, this.edible, this.edible, this.garbage, this.garbage, this.garbage];
 	this.scores = ['?', '?', '?', 1000, 1000, 200, 200, 200, -100, -100, -100];
-	/*
-	Rare: radioactive, heart
-	Box: mcdonalds, kfc, random
-	Food: apple, cherry, fish
-	Edible: hamburger, pizza, chicken, fries, coke, eatenapple
-	Garbage: shoe, can, trash, money
-	*/
 }
 
+// * Throw Items * //
 Hand.prototype.throw = function() {
 		if (this.checkHit(this.objPos.x, h*0.9-this.objPos.y, h*0.05)) {
 			if (this.obj == 'Mcdonalds') {
@@ -96,6 +102,7 @@ Hand.prototype.throw = function() {
 	}
 }
 
+// * Reset * //
 Hand.prototype.reset = function() {
 	if (this.objPos.x >= -w*0.2) {
 		return;
@@ -111,6 +118,7 @@ Hand.prototype.reset = function() {
 	this.obj = random(this.objects[this.objType]);
 }
 
+// * Check Collision with Duck * //
 Hand.prototype.checkCollision = function(pos_x, pos_y, d) {
 	if (dist(this.duckPos.x + h*0.04, h*0.9 - this.duckPos.y - h*0.05, pos_x, pos_y) < d) {
 		if (this.obj == 'Radioactive') {
@@ -148,6 +156,7 @@ Hand.prototype.checkCollision = function(pos_x, pos_y, d) {
 	}
 }
 
+// * Check Collision with Projectiles * //
 Hand.prototype.checkHit = function(pos_x, pos_y, d) {
 	if(!cooldown) {
 		return false;
@@ -165,10 +174,12 @@ Hand.prototype.checkHit = function(pos_x, pos_y, d) {
 	}
 }
 
+// * Score Calculation * //
 Hand.prototype.calcScore = function(score) {
 	itemScore += score;
 }
 
+// * Earned Score Display * //
 Hand.prototype.displayScore = function() {
 	if (this.scoreDisplay) { this.scr_t0 = millis(); this.scoreDisplay = false; }
 	if (millis() - this.scr_t0 < 2000) {
@@ -180,9 +191,10 @@ Hand.prototype.displayScore = function() {
 	}
 }
 
+// * Radioactive Invincibility * //
 Hand.prototype.greenWorld = function() {
 	if (greenworld && this.getGreenT) { this.green_t0 = millis(); this.getGreenT = false; }
-	if (millis() - this.green_t0 > 5000) {
+	if (millis() - this.green_t0 > 8000) {
 		greenworld = false;
 	}
 }

@@ -1,4 +1,8 @@
-// * DuckGame Class * //
+// * * * * * * * * * * * * * * * * * * //
+// - - - - -  DuckGame Class - - - - - //
+// - - - Manage the Entire Game - - -  //
+// * * * * * * * * * * * * * * * * * * //
+
 function DuckGame() {
   this.pos = createVector(0, 0);
 	this.bgPos = createVector(0, 0);
@@ -20,7 +24,7 @@ function DuckGame() {
 	this.enemy = new Enemy(this.physics.pos, this.physics.vel, this.projPos);
 }
 
-// * DuckGame.titleScreen() * //
+// * * * Title Screen * * * //
 DuckGame.prototype.titleScreen = function() {	
 	var title_txt = "Duck of the King";
 	push();
@@ -64,7 +68,7 @@ DuckGame.prototype.titleScreen = function() {
 	pop();
 }
 
-// * DuckGame.loadingScreen() * //
+// * * * Loading Screen * * * //
 DuckGame.prototype.loadingScreen = function() {
 	push();
 	stroke(0);
@@ -96,7 +100,7 @@ DuckGame.prototype.loadingScreen = function() {
 	pop();
 }
 
-// * DuckGame.selectScreen() * //
+// * * * Select Screen * * * //
 DuckGame.prototype.selectScreen = function() {
 	background(0);
 	var colors = ['#FFCC99', '#FF9933'];
@@ -126,7 +130,7 @@ DuckGame.prototype.selectScreen = function() {
 	}
 }
 
-// * DuckGame.scoreScreen() * //
+// * * * Score Screen * * * //
 DuckGame.prototype.scoreScreen = function() {
 	background(0);
 	push();
@@ -185,7 +189,7 @@ DuckGame.prototype.scoreScreen = function() {
 	pop();
 }
 
-// * DuckGame.gameOver() * //
+// * * * Game Over * * * //
 DuckGame.prototype.gameOver = function() {
 	if (mylife == 0) {
 		push();
@@ -207,7 +211,7 @@ DuckGame.prototype.gameOver = function() {
 	}
 }
 
-// * DuckGame.calcScore() * //
+// * * * Score Calculation * * * //
 DuckGame.prototype.calcScore = function() {
 	for (i = spawnTime.length-1; i >= 0; i--) { if (progress >= spawnTime[i]) { mult = i+1; break; } }
 	// if (greenworld) { myscore = progress + itemScore + killScore; }
@@ -219,7 +223,7 @@ DuckGame.prototype.calcScore = function() {
 	hiscore = nf(scrJSON[1][0], 6);
 }
 
-// * DuckGame.calcLife() * //
+// * * * Life Deduction * * * //
 DuckGame.prototype.calcLife = function() {
 	if (dead && (mylife > 0) && !inv && !greenworld && !admin) {
 		mylife -= 1;
@@ -233,7 +237,7 @@ DuckGame.prototype.calcLife = function() {
 	else if (millis()-this.inv_t0 > 3000) { inv = false; }
 }
 
-// * DuckGame.updateRank() * //
+// * * * Rank Update * * * //
 DuckGame.prototype.updateRank = function() {
 	for (var i = 1; i < 11; i++) {
 		if (int(myscore) > scrJSON_copy[i][0]) {
@@ -249,7 +253,7 @@ DuckGame.prototype.updateRank = function() {
 	if (myrank <= 10) { updateJSON(json_url, scrJSON_copy); }
 }
 
-// * DuckGame.move() * //
+// * * * Duck Movement * * * //
 DuckGame.prototype.move = function() {
 	// Constance Forces (Gravity, Normal Force, Friction)
 	this.physics.constantForce();
@@ -278,7 +282,7 @@ DuckGame.prototype.move = function() {
 	if (keyIsDown(32) && (this.physics.vel.y < 0)) { this.physics.vel.y *= 0.5; }
 }
 
-// * DuckGame.weapon() * //
+// * * * Duck Weapon * * * //
 DuckGame.prototype.weapon = function() {
 	cd = millis() - cd_t0;
 	if (cd > 3000) { cooldown = false; }
@@ -328,7 +332,7 @@ DuckGame.prototype.weapon = function() {
 	attack = false;
 }
 
-// * DuckGame.display() * //
+// * * * Display * * * //
 DuckGame.prototype.display = function() {
 	// Background
 	push();
@@ -411,11 +415,10 @@ DuckGame.prototype.display = function() {
 			if (cd < 500) { image(weaponImg, offset, 0, h*0.11*s, h*0.20); }
 		}
 		pop();
-		// if (weapon == 3) { push(); fill('red'); circle(this.projPos.x, h*0.9-this.projPos.y, h*0.03); pop(); }
 	}
 }
 
-// * DuckGame.music() * //
+// * * * Music * * * //
 DuckGame.prototype.music = function() {
 	if ((title || loading)) { main.stop(); rank.stop(); if (!intro.isPlaying()) { intro.loop(); } }
 	else if (card) { intro.stop(); }
@@ -423,7 +426,7 @@ DuckGame.prototype.music = function() {
 	else if (gg) { main.stop(); if (!rank.isPlaying()) { rank.loop(); } }
 }
 
-// * DuckGame.start() * //
+// * * * Start * * * //
 DuckGame.prototype.start = function() {
 	translate(height*0.05, height*0.11);
 	this.move();
@@ -438,7 +441,7 @@ DuckGame.prototype.start = function() {
 	this.gameOver();
 }
 
-// * DuckGame.reset() * //
+// * * * Reset Game * * * //
 DuckGame.prototype.reset = function() {
 	admin = false;
 	title = true;
