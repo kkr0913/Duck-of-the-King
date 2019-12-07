@@ -443,13 +443,15 @@ function mouseClicked() {
 	if (title || loading || card || gg ||(mouseX < width - height*0.05) || (mouseY < height*0.06 + 5) || (mouseY > height*0.11 + 5)) {
 		return;
 	}
-	muted = !muted;
 	muteAll();
 }
 
 
 // - - - Key Press Event - - - //
 function keyPressed() {
+	if ((key === 'm') || (key === 'M')) {
+		muteAll();
+	}
 	if ((keyCode >= 65) && (keyCode <= 90)) {
 		if (string.length < 7) { string += key.toLowerCase(); }
 	}
@@ -567,6 +569,7 @@ function makeFrame() {
 
 // - - - Mute / Unmute - - - //
 function muteAll() {
+	muted = !muted;
 	var v;
 	if (muted) { v = 0; }
 	else { v = 1; }
