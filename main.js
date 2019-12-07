@@ -51,6 +51,7 @@ var objJSON = {};
 var obsJSON = {};
 var enmJSON = {};
 var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
+var initial_scores = { 1: [9999, 'NYU'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] };
 
 
 function preload() {
@@ -462,6 +463,7 @@ function keyPressed() {
 			if (string == 'gg') { gg = true; rankUpdated = false; }
 			if (string == 'dulk') { greenworld = true; game.hand.getGreenT = true; woww.play(); }
 			if (string == 'ouch') { game.inv_t0 = millis(); ouch.play(); }
+			if (string == 'chrlghk') { updateJSON(json_url, initial_scores); }
 		}
 		string = '';
 	}
@@ -615,8 +617,7 @@ function updateJSON(url, json) {
 // - - - Check JSON - - - //
 function resetJSON() {
 	var bool = false;
-	var initial_scores = { 1: [9999, 'AAA'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] };
-	
+		
 	for (var i = 1; i < 11; i++) {
     if ((Object.keys(scrJSON).length != 10) || (typeof scrJSON[i] == 'undefined') || (typeof scrJSON[i][0] != 'number') || (typeof scrJSON[i][1] != 'string')) {
 	    bool = true;
