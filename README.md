@@ -1,8 +1,8 @@
 # **![](https://github.com/kkr0913/Duck-of-the-King/blob/gh-pages/duck_fly1.png) Duck of the King ![](https://github.com/kkr0913/Duck-of-the-King/blob/gh-pages/duck_fly1_flip.png)**
-
-### An arcade-ish game, based on randomly generated title and features.
 #### Play Link: [kkr0913.github.io/Duck-of-the-King/](kkr0913.github.io/Duck-of-the-King/)
 <br />
+
+### An arcade-ish game, based on randomly generated title and features.
 <br />
 
 ***Randomly Generated Features:***
