@@ -3,7 +3,7 @@
 <br />
 <br />
 
-## Description: 
+## **I. Description:**
 ### An arcade-ish game, based on randomly generated title and features.
 <br />
 
@@ -16,7 +16,7 @@
 <br />
 <br />
 
-## **How to play:**
+## **II. How to play:**
 <br />
 
 ***< General >***
