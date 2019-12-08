@@ -422,8 +422,8 @@ function draw() {
 	// Frame
 	image(f1, 0, height*0.06);
 	image(f2, 0, height*0.95);
-	image(f3, 0, height*0.11-1, height*0.05, height*0.89);
-	image(f4, width-height*0.05, height*0.11-1, height*0.05, height*0.89);
+	image(f3, 0, height*0.11, height*0.05, height*0.89);
+	image(f4, width-height*0.05, height*0.11, height*0.05, height*0.89);
 	push();
 	translate(0, height*0.06);
 	if (muted) { image(mutedIcon, width-height*0.05, 5); }
