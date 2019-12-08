@@ -5,6 +5,7 @@
 
 ## Description: 
 ### An arcade-ish game, based on randomly generated title and features.
+<br />
 
 ***Randomly Generated Features:***
 - Title: Duck of the King
@@ -22,6 +23,7 @@
 - **Arrow**: Toggle Menu
 - **Space**: Select
 - **M** / **Click Icon**: Mute/Unmute
+<br />
 
 ***< Game Play >***
 - **Left / Right**: Move
