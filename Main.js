@@ -562,8 +562,8 @@ function makeFrame() {
 	image(mosaic, 0, 0);
 	f1 = get(0, height*0.06, width, height*0.05);
 	f2 = get(0, height*0.95, width, height*0.05);
-	f3 = get(0, height*0.11, height*0.05, height*0.89*1.01);
-	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89*1.01);
+	f3 = get(0, height*0.11, height*0.05, height*0.89);
+	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89);
 	background(0, 191, 255);
 }
 
