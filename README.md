@@ -22,7 +22,6 @@
 - **Arrow**: Toggle Menu
 - **Space**: Select
 - **M** / **Click Icon**: Mute/Unmute
-<br />
 
 ***< Game Play >***
 - **Left / Right**: Move
