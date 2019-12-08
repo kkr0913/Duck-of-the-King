@@ -152,7 +152,7 @@ Enemy.prototype.displayScore = function() {
 	if (this.scoreDisplay) { this.scr_t0 = millis(); this.scoreDisplay = false; }
 	if (millis() - this.scr_t0 < 2000) {
 		push();
-		textSize(36);
+		textSize(height/30);
 		fill(this.scrclr[0], this.scrclr[1], this.scrclr[2], map(millis()-this.scr_t0, 0, 2000, 255, 0));
 		text(this.scrtxt, this.scrPos.x, this.scrPos.y-h*(millis()-this.scr_t0)/20000);
 		pop();

@@ -31,7 +31,7 @@ DuckGame.prototype.titleScreen = function() {
 	fill('#FFEB3B');
 	stroke('#FF9900');
 	strokeWeight(10);
-	textSize(round(width/12));
+	textSize(height/7);
 	var txt_w = 0;
 	var n = 0;
 	for (var i in title_txt) {
@@ -55,15 +55,18 @@ DuckGame.prototype.titleScreen = function() {
 	fill(255);
 	stroke(0);
 	strokeWeight(3);
-	textSize(round(width/24));
+	textSize(height/14);
 	if (!motion[floor(0.5*frameCount)%motion.length]) { text('Press  Any  Button', 0, height*0.1, width, height*0.9); }
 	
 	noStroke();
-	textSize(44);
-	text('1996   kyurae   corp', 0, height*0.75, width, h*0.05);
-	text('licenced   by', 0, height*0.75+h*0.05, width, h*0.05);
-	text('New   York   Univ   DMUY  1133   Inc', 0, height*0.75+h*0.1, width, h*0.05);
-	translate((width-textWidth('1996   kyurae   corp'))/2-c.width*2, height*0.75+h*0.01);
+	textSize(floor(h/20));
+	// text('1996   kyurae   corp', 0, height*0.75, width, h*0.05);
+	// text('licenced   by', 0, height*0.75+h*0.05, width, h*0.05);
+	// text('New   York   Univ   DMUY  1133   Inc', 0, height*0.75+h*0.1, width, h*0.05);
+	text('1996   kyurae   corp', 0, height*0.83-textAscent()*3.0, width, textAscent()*1.2);
+	text('licenced   by', 0, height*0.83-textAscent()*1.5, width, textAscent()*1.2);
+	text('New   York   Univ   DMUY  1133   Inc', 0, height*0.83, width, textAscent()*1.2);
+	translate((width-textWidth('1996   kyurae   corp'))/2-c.width*2, height*0.83-textAscent()*2.8);
 	image(c, 0, 0);
 	pop();
 }
@@ -106,7 +109,7 @@ DuckGame.prototype.selectScreen = function() {
 	var colors = ['#FFCC99', '#FF9933'];
 	push();
 	fill(colors[motion[(2*frameCount)%motion.length]]);
-	textSize(100);
+	textSize(height/10);
 	text('select   weapon', 0, 0, width, height*0.4);
 	pop();
 	for (var i = 0; i < 3; i++) {
@@ -196,7 +199,7 @@ DuckGame.prototype.gameOver = function() {
 		fill(255);
 		stroke(0);
 		strokeWeight(5);
-		textSize(100);
+		textSize(height/10);
 		text("g  a  m  e\no  v  e  r", 0, 0, w, h*0.8);
 		pop();
 		this.physics.removeForce();
@@ -345,7 +348,7 @@ DuckGame.prototype.display = function() {
 	pop();
 	push();
 	fill(128, 128);
-	textSize(200);
+	textSize(height/5);
 	if (admin) { text('rlarbfo     mode', 0, 0, w, h*0.9); }
 	pop();
 	

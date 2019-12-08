@@ -5,7 +5,7 @@
 
 function Physics(initialVec) {
 	this.mass = 1;                                // mass
-	this.g = -0.006;                              // gravitational acceleration
+	this.g = -6;                                  // gravitational acceleration
 	this.mu = 0.05;                               // friction coefficient
   this.pos = initialVec;                        // position (set to initial position)
   this.vel = createVector(0, 0);                // velocity
@@ -61,7 +61,7 @@ Physics.prototype.moveX = function(x) {
 
 // * Gravity * //
 Physics.prototype.gravity = function(s=1) {
-	var gravity = createVector(0, this.mass * this.g * this.pos.y * s);
+	var gravity = createVector(0, this.mass * this.g * (this.pos.y/h) * s);
 	this.applyForce(gravity);
 }
 
