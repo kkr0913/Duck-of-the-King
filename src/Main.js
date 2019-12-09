@@ -65,7 +65,7 @@ function preload() {
 	});
 	
 	// Font
-	arcadeFont = loadFont('src\\assets\\font\\ARCADECLASSIC.otf');
+	arcadeFont = loadFont('assets\\font\\ARCADECLASSIC.otf');
 	
 	// Sound
 	intro = loadSound('assets\\sound\\intro.mp3');
