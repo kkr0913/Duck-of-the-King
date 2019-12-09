@@ -45,30 +45,30 @@ function Hand(pos, vel, proj) {
 
 // * Throw Items * //
 Hand.prototype.throw = function() {
-		if (this.checkHit(this.objPos.x, h*0.9-this.objPos.y, h*0.05)) {
-			if (this.obj == 'Mcdonalds') {
-				this.obj = random(this.mcbox);
-				this.objType = 5;
-			}
-			else if (this.obj == 'Kfc') {
-				this.obj = random(this.kfcbox);
-				this.objType = 5;
-			}
-			else if (this.obj == 'Randombox') {
-				this.obj = random(this.random);
-				for (var i in this.objects) {
-					for(var j of this.objects[i]) {
-						if (j == this.obj) {
-							this.objType = i;
-							break;
-						}
+	if (this.checkHit(this.objPos.x, h*0.9-this.objPos.y, h*0.05)) {
+		if (this.obj == 'Mcdonalds') {
+			this.obj = random(this.mcbox);
+			this.objType = 5;
+		}
+		else if (this.obj == 'Kfc') {
+			this.obj = random(this.kfcbox);
+			this.objType = 5;
+		}
+		else if (this.obj == 'Randombox') {
+			this.obj = random(this.random);
+			for (var i in this.objects) {
+				for(var j of this.objects[i]) {
+					if (j == this.obj) {
+						this.objType = i;
+						break;
 					}
 				}
 			}
-			else {
-				this.objPos.x = -w;
-			}
 		}
+		else {
+			this.objPos.x = -w;
+		}
+	}
 	
 	this.checkCollision(this.objPos.x, h*0.9-this.objPos.y, h*0.05);
 	this.displayScore();
