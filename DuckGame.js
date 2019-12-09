@@ -146,7 +146,7 @@ DuckGame.prototype.scoreScreen = function() {
 	rectMode(CENTER);
 	fill(0);
 	noStroke();
-	rect(width*0.5, height*0.05, textWidth('score          ' + myscore)*1.2, textAscent());
+	rect(width*0.5, height*0.05, textWidth('score          ' + myscore)*1.2, 10);
 	rectMode(CORNER);
 	fill(255, 255, 0);
 	textAlign(RIGHT, CENTER);
