@@ -338,12 +338,12 @@ Enemy.prototype.spawnWind = function(blow) {
 		this.physics.applyForce(new p5.Vector(-0.001, 0));
 		tint(255, 200);
 		imageMode(CORNERS);
-		if (!motion[frameCount % motion.length]) {
+		if (!motion[floor(frameCount*0.5) % motion.length]) {
 			image(enmJSON.Wind[0], w*0.70, h*0.05, w*0.70+enmJSON.Wind[1], h*0.05+enmJSON.Wind[2]);
 			image(enmJSON.Wind[0], w*0.50-0.2*enmJSON.Wind[1], h*0.28, w*0.50+enmJSON.Wind[1], h*0.28+enmJSON.Wind[2]);
 			image(enmJSON.Wind[0], w*0.65, h*0.58, w*0.65+enmJSON.Wind[1], h*0.58+enmJSON.Wind[2]);
 		}
-		if (motion[frameCount % motion.length]) {
+		if (motion[floor(frameCount*0.5) % motion.length]) {
 			image(enmJSON.Wind[0], w*0.70-0.2*enmJSON.Wind[1], h*0.05, w*0.70+enmJSON.Wind[1], h*0.05+enmJSON.Wind[2]);
 			image(enmJSON.Wind[0], w*0.50, h*0.28, w*0.50+enmJSON.Wind[1], h*0.28+enmJSON.Wind[2]);
 			image(enmJSON.Wind[0], w*0.65-0.2*enmJSON.Wind[1], h*0.58, w*0.65+enmJSON.Wind[1], h*0.58+enmJSON.Wind[2]);
