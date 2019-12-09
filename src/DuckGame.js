@@ -4,7 +4,7 @@
 // * * * * * * * * * * * * * * * * * * //
 
 function DuckGame() {
-  this.pos = createVector(0, 0);
+	this.pos = createVector(0, 0);
 	this.bgPos = createVector(0, 0);
 	this.gndPos = createVector(0, 0);
 	this.projPos = createVector(0, 0);
@@ -60,9 +60,6 @@ DuckGame.prototype.titleScreen = function() {
 	
 	noStroke();
 	textSize(floor(h/20));
-	// text('1996   kyurae   corp', 0, height*0.75, width, h*0.05);
-	// text('licenced   by', 0, height*0.75+h*0.05, width, h*0.05);
-	// text('New   York   Univ   DMUY  1133   Inc', 0, height*0.75+h*0.1, width, h*0.05);
 	text('1996   kyurae   corp', 0, height*0.83-textAscent()*3.0, width, textAscent()*1.2);
 	text('licenced   by', 0, height*0.83-textAscent()*1.5, width, textAscent()*1.2);
 	text('New   York   Univ   DMUY  1133   Inc', 0, height*0.83, width, textAscent()*1.2);
