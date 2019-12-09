@@ -264,11 +264,11 @@ DuckGame.prototype.move = function() {
 	// Move Left/Right
 	if (!greenworld) {
 		if (keyIsDown(LEFT_ARROW) && (mylife > 0)) { this.physics.moveX(-0.02); this.lookingAt = -1; }
-  	if (keyIsDown(RIGHT_ARROW) && (mylife > 0)) { this.physics.moveX(0.02); this.lookingAt = 1; }
+		if (keyIsDown(RIGHT_ARROW) && (mylife > 0)) { this.physics.moveX(0.02); this.lookingAt = 1; }
 	}
 	if (greenworld) {
 		if (keyIsDown(RIGHT_ARROW) && !gg) { this.physics.moveX(-0.02); this.lookingAt = -1; }
-  	if (keyIsDown(LEFT_ARROW) && !gg) { this.physics.moveX(0.02); this.lookingAt = 1; }
+		if (keyIsDown(LEFT_ARROW) && !gg) { this.physics.moveX(0.02); this.lookingAt = 1; }
 	}
 	if ((this.physics.vel.x > 0) && (this.physics.pos.x > w*0.4)) {
 		this.bgPos.x -= this.physics.vel.x * 0.5;
