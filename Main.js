@@ -44,6 +44,8 @@ var gg = false;
 var ee = false;
 var rankUpdated = true;
 var nameEntered = false;
+var up2date = false;
+var dataSent = true;
 var spawnTime = [1000, 1500, 2000, 3000, 5000, 8000];
 var scoreColors = [[255, 0, 0], [0, 255, 0], [0, 0, 255], [255, 153, 0], [255, 255, 59], [204, 0, 102], [102, 0, 204]];
 var obsArray = ['Hydrant', 'Trashcan', 'Trafficcone', 'Phonebooth', 'Car', 'Lamppost', 'Construction'];
@@ -422,8 +424,8 @@ function draw() {
 	// Frame
 	image(f1, 0, height*0.06);
 	image(f2, 0, height*0.95);
-	image(f3, 0, height*0.11-1, height*0.05, height*0.89);
-	image(f4, width-height*0.05, height*0.11-1, height*0.05, height*0.89);
+	image(f3, 0, height*0.11, height*0.05, height*0.89);
+	image(f4, width-height*0.05, height*0.11, height*0.05, height*0.89);
 	push();
 	translate(0, height*0.06);
 	if (muted) { image(mutedIcon, width-height*0.05, 5); }
@@ -450,6 +452,7 @@ function mouseClicked() {
 
 // - - - Key Press Event - - - //
 function keyPressed() {
+	if (key == 'l') {  }
 	if ((key === 'm') || (key === 'M')) {
 		muteAll();
 	}
@@ -463,7 +466,7 @@ function keyPressed() {
 		if (admin) {
 			if (string == 'reset') { game.reset(); }
 			if (string == 'die') { game.physics.removeForce(); mylife = 0; game.dead_t0 = millis(); game.dead_h0 = game.pos.y; over.play(); }
-			if (string == 'gg') { gg = true; rankUpdated = false; }
+			if (string == 'gg') { gg = true; rankUpdated = false; up2date = true; }
 			if (string == 'dulk') { greenworld = true; game.hand.getGreenT = true; woww.play(); }
 			if (string == 'ouch') { game.inv_t0 = millis(); ouch.play(); }
 			if (string == 'chrlghk') { updateJSON(json_url, initial_scores); }
@@ -562,8 +565,8 @@ function makeFrame() {
 	image(mosaic, 0, 0);
 	f1 = get(0, height*0.06, width, height*0.05);
 	f2 = get(0, height*0.95, width, height*0.05);
-	f3 = get(0, height*0.11, height*0.05, height*0.89*1.01);
-	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89*1.01);
+	f3 = get(0, height*0.11, height*0.05, height*0.89);
+	f4 = get(width-height*0.05, height*0.11, height*0.05, height*0.89);
 	background(0, 191, 255);
 }
 
@@ -634,4 +637,11 @@ function resetJSON() {
 	}
 	
 	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
+}
+
+
+// - - - Reload JSON - - - //
+function reloadJSON(json) {
+	scrJSON_copy = json;
+	up2date = true;
 }

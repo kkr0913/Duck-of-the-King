@@ -176,7 +176,7 @@ DuckGame.prototype.scoreScreen = function() {
 		textAlign(RIGHT, TOP);
 		text(str(k), 0, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 		textAlign(CENTER, TOP);
-		text(nf(scrJSON[k][0], 6), width*0.35, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
+		text(nf(scrJSON_copy[k][0], 6), width*0.35, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
 		textAlign(LEFT, TOP);
 		if (k == myrank) {
 			for (var idx = 0; idx < 3; idx++) {
@@ -186,9 +186,9 @@ DuckGame.prototype.scoreScreen = function() {
 				text(char(alpJSON[idx]), width*0.65+textWidth('X')*idx, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 			}
 		}
-		else { text(scrJSON[k][1], width*0.65, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
+		else { text(scrJSON_copy[k][1], width*0.65, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
 	}
-	if (nameEntered && (myrank <= 10)) { scrJSON_copy[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy); }
+	if (nameEntered && (myrank <= 10) && !dataSent) { scrJSON_copy[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy); dataSent = true; }
 	pop();
 }
 
@@ -223,7 +223,7 @@ DuckGame.prototype.calcScore = function() {
 	if (int(myscore) >= 999999) { myscore = 999999; }
 	if (admin) { myscore = 0; }
 	myscore = nf(myscore, 6);
-	hiscore = nf(scrJSON[1][0], 6);
+	hiscore = nf(scrJSON_copy[1][0], 6);
 }
 
 // * * * Life Deduction * * * //
@@ -231,7 +231,7 @@ DuckGame.prototype.calcLife = function() {
 	if (dead && (mylife > 0) && !inv && !greenworld && !admin) {
 		mylife -= 1;
 		if (mylife != 0) { this.inv_t0 = millis(); ouch.play(); }
-		if (mylife == 0) { this.dead_t0 = millis(); this.dead_h0 = this.pos.y; over.play(); }
+		if (mylife == 0) { loadJSON(json_url, reloadJSON); this.dead_t0 = millis(); this.dead_h0 = this.pos.y; over.play(); }
 		this.physics.removeForce();
 		dead = false;
 	}
@@ -242,6 +242,9 @@ DuckGame.prototype.calcLife = function() {
 
 // * * * Rank Update * * * //
 DuckGame.prototype.updateRank = function() {
+	while(!up2date);
+	up2date = false;
+	
 	for (var i = 1; i < 11; i++) {
 		if (int(myscore) > scrJSON_copy[i][0]) {
 			for (var j = 9; j >= i; j--) {
@@ -253,7 +256,7 @@ DuckGame.prototype.updateRank = function() {
 		}
 	}
 	if (myrank > 10) { nameEntered = true; }
-	if (myrank <= 10) { updateJSON(json_url, scrJSON_copy); }
+	else { dataSent = false; }
 }
 
 // * * * Duck Movement * * * //
@@ -446,11 +449,14 @@ DuckGame.prototype.start = function() {
 
 // * * * Reset Game * * * //
 DuckGame.prototype.reset = function() {
+	loadJSON(json_url, reloadJSON);
+	up2date = false;
 	admin = false;
 	title = true;
 	gg = false;
 	ee = false;
 	nameEntered = false;
+	dataSent = true;
 	card_idx = 0;
 	sel_idx = 4;
 	alp_idx = 0;
