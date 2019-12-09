@@ -182,7 +182,7 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	frameRate(60);
-	pixelDensity(0.4);
+	pixelDensity(0.35);
 	textAlign(CENTER, CENTER);
 	textSize(height/18);
 	textFont(arcadeFont);
