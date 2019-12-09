@@ -638,6 +638,7 @@ function resetJSON() {
 	
 	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
 }
+<<<<<<< HEAD
 
 
 // - - - Reload JSON - - - //
@@ -645,3 +646,5 @@ function reloadJSON(json) {
 	scrJSON_copy = json;
 	up2date = true;
 }
+=======
+>>>>>>> 1a59cf424d796c4e41b11820703a01f9450bc8e4
