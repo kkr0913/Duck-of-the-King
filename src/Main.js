@@ -626,8 +626,8 @@ function resetJSON() {
 	var bool = false;
 		
 	for (var i = 1; i < 11; i++) {
-    if ((Object.keys(scrJSON).length != 10) || (typeof scrJSON[i] == 'undefined') || (typeof scrJSON[i][0] != 'number') || (typeof scrJSON[i][1] != 'string')) {
-	    bool = true;
+		if ((Object.keys(scrJSON).length != 10) || (typeof scrJSON[i] == 'undefined') || (typeof scrJSON[i][0] != 'number') || (typeof scrJSON[i][1] != 'string')) {
+			bool = true;
 			break;
 		}
 		else if ((str(scrJSON[i][0]).length > 6) || (scrJSON[i][1].length != 3)) {
