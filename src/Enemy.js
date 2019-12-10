@@ -336,7 +336,6 @@ Enemy.prototype.spawnWind = function(blow) {
 	if (millis() - this.wind_t0 < 4000) {
 		if (this.vel.x > 0) { this.vel.x *= 0.99; }
 		this.physics.applyForce(new p5.Vector(-0.001, 0));
-		tint(255, 200);
 		imageMode(CORNERS);
 		if (!motion[floor(frameCount*0.5) % motion.length]) {
 			image(enmJSON.Wind[0], w*0.70, h*0.05, w*0.70+enmJSON.Wind[1], h*0.05+enmJSON.Wind[2]);
