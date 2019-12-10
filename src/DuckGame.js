@@ -147,18 +147,20 @@ DuckGame.prototype.scoreScreen = function() {
 	rectMode(CORNER);
 	fill(255, 255, 0);
 	textAlign(RIGHT, CENTER);
-	text('score     ', 0, 0, width*0.5, height*0.1);
+	text('score     ', 0, height*0.05 - textAscent()*0.6, width*0.5, textAscent()*1.2);
 	fill(255);
 	textAlign(LEFT, CENTER);
 	text('     ' + myscore, width*0.5, 0, width*0.5, height*0.1);
+	fill('#FF0000');
 	textAlign(CENTER, TOP);
-	text("! Ranking  !", 0, height*0.15, width, textAscent()*2);
+	text("! Ranking  !", 0, height*0.12, width, textAscent()*2);
+	fill('#21DE00');
 	textAlign(RIGHT, TOP);
-	text('No', 0, height*0.15+textAscent()*2, width*0.35, textAscent()*1.5);
+	text('No', 0, height*0.12+textAscent()*2, width*0.35, textAscent()*1.5);
 	textAlign(CENTER, TOP);
-	text('Score', width*0.35, height*0.15+textAscent()*2, width*0.3, textAscent()*1.5);
+	text('Score', width*0.35, height*0.12+textAscent()*2, width*0.3, textAscent()*1.5);
 	textAlign(LEFT, TOP);
-	text('Name', width*0.65, height*0.15+textAscent()*2, width*0.35, textAscent()*1.5);
+	text('Name', width*0.65, height*0.12+textAscent()*2, width*0.35, textAscent()*1.5);
 	if (!rankUpdated) {
 		this.updateRank();
 		rankUpdated = true;
@@ -166,24 +168,39 @@ DuckGame.prototype.scoreScreen = function() {
 	for (var k = 1; k < 11; k++) {
 		var colors = ['#FFCC99', '#FF9933'];
 		if (k == myrank) {
-			if (!nameEntered) { fill(0, 0, 255); }
+			if (!nameEntered) { fill('#FF47DE'); }
 			if (nameEntered) { fill(colors[motion[(4*frameCount)%motion.length]]); }
 		}
 		else { fill(255); }
 		textAlign(RIGHT, TOP);
-		text(str(k), 0, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
+		text(str(k), 0, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 		textAlign(CENTER, TOP);
-		text(nf(scrJSON_copy[k][0], 6), width*0.35, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
+		text(nf(scrJSON_copy[k][0], 6), width*0.35, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
 		textAlign(LEFT, TOP);
 		if (k == myrank) {
 			for (var idx = 0; idx < 3; idx++) {
 				if (nameEntered) { fill(colors[motion[(4*frameCount)%motion.length]]); }
-				else if(idx == alp_idx) { fill(0, 0, 255); }
+				else if(idx == alp_idx) { fill('#FF47DE'); }
 				else { fill(255); }
-				text(char(alpJSON[idx]), width*0.65+textWidth('X')*idx, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
+				text(char(alpJSON[idx]), width*0.65+textWidth('X')*idx, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 			}
 		}
-		else { text(scrJSON_copy[k][1], width*0.65, height*0.15+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
+		else { text(scrJSON_copy[k][1], width*0.65, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
+	}
+	var remaining = ceil((30000-millis()+gg_t0)/1000);
+	var len = map(remaining, 0, 30, 0, width*0.6-textAscent()*2.5-textWidth('time'));
+	if (millis() - gg_t0 < 31000) {
+		fill(255);
+		textAlign(LEFT, CENTER);
+		text('time', width*0.2+textAscent(), height*0.95-textAscent()*3, width, textAscent()*3);
+		fill('#21DE00');
+		rect(width*0.2+textAscent()*1.5+textWidth('time'), height*0.95-textAscent()*1.75, len, textAscent()*0.75);
+	}
+	if ((millis() - gg_t0 >= 31000) && (millis() - gg_t0 < 31200) && !enter.isPlaying()) {
+		alpJSON.name = char(alpJSON[0]) + char(alpJSON[1]) + char(alpJSON[2]);
+		nameEntered = true;
+		if (alpJSON.name == 'NYU') { ee = true; }
+		enter.play();
 	}
 	if (nameEntered && (myrank <= 10) && !dataSent) { scrJSON_copy[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy); dataSent = true; }
 	pop();
@@ -253,7 +270,7 @@ DuckGame.prototype.updateRank = function() {
 		}
 	}
 	if (myrank > 10) { nameEntered = true; }
-	else { dataSent = false; }
+	else { dataSent = false; gg_t0 = millis(); }
 }
 
 // * * * Duck Movement * * * //
@@ -264,11 +281,11 @@ DuckGame.prototype.move = function() {
 	// Move Left/Right
 	if (!greenworld) {
 		if (keyIsDown(LEFT_ARROW) && (mylife > 0)) { this.physics.moveX(-0.02); this.lookingAt = -1; }
-		if (keyIsDown(RIGHT_ARROW) && (mylife > 0)) { this.physics.moveX(0.02); this.lookingAt = 1; }
+  		if (keyIsDown(RIGHT_ARROW) && (mylife > 0)) { this.physics.moveX(0.02); this.lookingAt = 1; }
 	}
 	if (greenworld) {
 		if (keyIsDown(RIGHT_ARROW) && !gg) { this.physics.moveX(-0.02); this.lookingAt = -1; }
-		if (keyIsDown(LEFT_ARROW) && !gg) { this.physics.moveX(0.02); this.lookingAt = 1; }
+  		if (keyIsDown(LEFT_ARROW) && !gg) { this.physics.moveX(0.02); this.lookingAt = 1; }
 	}
 	if ((this.physics.vel.x > 0) && (this.physics.pos.x > w*0.4)) {
 		this.bgPos.x -= this.physics.vel.x * 0.5;

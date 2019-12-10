@@ -11,6 +11,7 @@ var card_idx = 0;
 var sel_idx = 4;
 var sel_t0 = -10000;
 var cd_t0 = -10000;
+var gg_t0 = -50000;
 var cd = 3000;
 var weapon = 0;
 var progress = 0;
