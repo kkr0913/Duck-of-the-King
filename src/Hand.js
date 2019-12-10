@@ -128,7 +128,7 @@ Hand.prototype.checkCollision = function(pos_x, pos_y, d) {
 		}
 		else if (this.obj == 'Heart') {
 			if (mylife != 3) { mylife += 1; lifeup.play(); }
-			if (mylife == 3) {
+			else if (mylife == 3) {
 				var scr1 = mult*5000;
 				if (greenworld) { scr1 = mult*50000; }
 				this.scrPos.set(new p5.Vector(this.objPos.x, h*0.9-this.objPos.y-h*0.05));
