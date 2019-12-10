@@ -452,7 +452,6 @@ function mouseClicked() {
 
 // - - - Key Press Event - - - //
 function keyPressed() {
-	if (key == 'l') {  }
 	if ((key === 'm') || (key === 'M')) {
 		muteAll();
 	}
