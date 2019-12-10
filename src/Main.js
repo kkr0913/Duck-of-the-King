@@ -511,6 +511,7 @@ function keyPressed() {
 			if (key === "ArrowUp") { if (alpJSON[alp_idx] == 90) { alpJSON[alp_idx] = 65; } else { alpJSON[alp_idx] += 1; alp.play(); } }
 			if (key === "ArrowDown") { if (alpJSON[alp_idx] == 65) { alpJSON[alp_idx] = 90; } else { alpJSON[alp_idx] -= 1; alp.play(); } }
 			if (keyCode === 32) {
+				gg_t0 = -50000;
 				alpJSON.name = char(alpJSON[0]) + char(alpJSON[1]) + char(alpJSON[2]);
 				nameEntered = true;
 				if (alpJSON.name == 'NYU') { ee = true; }
