@@ -242,7 +242,7 @@ DuckGame.prototype.calcScore = function() {
 
 // * * * Life Deduction * * * //
 DuckGame.prototype.calcLife = function() {
-	if (dead && (mylife > 0) && !inv && !greenworld && !admin) {
+	if (dead && (mylife > 0) && !inv && !greenworld && !admin && (progress > 50)) {
 		mylife -= 1;
 		if (mylife != 0) { this.inv_t0 = millis(); ouch.play(); }
 		if (mylife == 0) { loadJSON(json_url, reloadJSON); this.dead_t0 = millis(); this.dead_h0 = this.pos.y; over.play(); }
