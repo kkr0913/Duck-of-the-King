@@ -466,10 +466,10 @@ function keyPressed() {
 		if (admin) {
 			if (string == 'reset') { game.reset(); }
 			if (string == 'die') { loadJSON(json_url, reloadJSON); game.physics.removeForce(); mylife = 0; game.dead_t0 = millis(); game.dead_h0 = game.pos.y; over.play(); }
-			if (string == 'gg') { loadJSON(json_url, reloadJSON); gg = true; rankUpdated = false; }
+// 			if (string == 'gg') { loadJSON(json_url, reloadJSON); gg = true; rankUpdated = false; }
 			if (string == 'dulk') { greenworld = true; game.hand.getGreenT = true; woww.play(); }
 			if (string == 'ouch') { game.inv_t0 = millis(); ouch.play(); }
-			if (string == 'chrlghk') { updateJSON(json_url, initial_scores); loadJSON(json_url, reloadJSON); }
+// 			if (string == 'chrlghk') { updateJSON(json_url, initial_scores); loadJSON(json_url, reloadJSON); }
 		}
 		string = '';
 	}
