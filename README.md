@@ -1,5 +1,6 @@
 # **![](https://github.com/kkr0913/Duck-of-the-King/blob/gh-pages/assets/image/duck_fly1.png) Duck of the King ![](https://github.com/kkr0913/Duck-of-the-King/blob/gh-pages/assets/image/duck_fly1_flip.png)**
 #### Play Link: [kkr0913.github.io/Duck-of-the-King/](https://kkr0913.github.io/Duck-of-the-King/)
+#### Itch.io Link: [kkr0913.itch.io/duck-of-the-king](https://kkr0913.itch.io/duck-of-the-king)
 <br />
 <br />
 
