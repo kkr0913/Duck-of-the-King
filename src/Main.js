@@ -1,4 +1,4 @@
-var json_url = 'https://api.myjson.com/bins/rbfo';
+var json_url = 'https://api.jsonserve.com/KqcIKT';
 var scrJSON;
 var scrJSON_copy;
 var bg;
@@ -54,7 +54,7 @@ var objJSON = {};
 var obsJSON = {};
 var enmJSON = {};
 var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
-var initial_scores = { 1: [9999, 'NYU'], 2: [8888, 'AAA'], 3: [7777, 'AAA'], 4: [6666, 'AAA'], 5: [5555, 'AAA'], 6: [4444, 'AAA'], 7: [3333, 'AAA'], 8: [2222, 'AAA'], 9: [1111, 'AAA'], 10: [0, 'AAA'] };
+var initial_scores = { '1': [9999, 'NYU'], '2': [8888, 'AAA'], '3': [7777, 'AAA'], '4': [6666, 'AAA'], '5': [5555, 'AAA'], '6': [4444, 'AAA'], '7': [3333, 'AAA'], '8': [2222, 'AAA'], '9': [1111, 'AAA'], '10': [0, 'AAA'] };
 
 
 function preload() {
