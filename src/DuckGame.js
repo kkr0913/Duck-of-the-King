@@ -175,7 +175,7 @@ DuckGame.prototype.scoreScreen = function() {
 		textAlign(RIGHT, TOP);
 		text(str(k), 0, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 		textAlign(CENTER, TOP);
-		text(nf(scrJSON_copy[k][0], 6), width*0.35, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
+		text(nf(scrJSON_copy.record[k][0], 6), width*0.35, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.3, textAscent()*1.2);
 		textAlign(LEFT, TOP);
 		if (k == myrank) {
 			for (var idx = 0; idx < 3; idx++) {
@@ -185,7 +185,7 @@ DuckGame.prototype.scoreScreen = function() {
 				text(char(alpJSON[idx]), width*0.65+textWidth('X')*idx, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2);
 			}
 		}
-		else { text(scrJSON_copy[k][1], width*0.65, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
+		else { text(scrJSON_copy.record[k][1], width*0.65, height*0.12+textAscent()*3.5+textAscent()*1.2*(k-1), width*0.35, textAscent()*1.2); }
 	}
 	var remaining = ceil((30000-millis()+gg_t0)/1000);
 	var len = map(remaining, 0, 30, 0, width*0.6-textAscent()*2.5-textWidth('time'));
@@ -202,7 +202,7 @@ DuckGame.prototype.scoreScreen = function() {
 		if (alpJSON.name == 'NYU') { ee = true; }
 		enter.play();
 	}
-	if (nameEntered && (myrank <= 10) && !dataSent) { scrJSON_copy[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy); dataSent = true; }
+	if (nameEntered && (myrank <= 10) && !dataSent) { scrJSON_copy.record[myrank] = [int(myscore), alpJSON.name]; updateJSON(json_url, scrJSON_copy.record); dataSent = true; }
 	pop();
 }
 
@@ -237,7 +237,7 @@ DuckGame.prototype.calcScore = function() {
 	if (int(myscore) >= 999999) { myscore = 999999; }
 	if (admin) { myscore = 0; }
 	myscore = nf(myscore, 6);
-	hiscore = nf(scrJSON_copy[1][0], 6);
+	hiscore = nf(scrJSON_copy.record[1][0], 6);
 }
 
 // * * * Life Deduction * * * //
@@ -260,11 +260,11 @@ DuckGame.prototype.updateRank = function() {
 	up2date = false;
 	
 	for (var i = 1; i < 11; i++) {
-		if (int(myscore) > scrJSON_copy[i][0]) {
+		if (int(myscore) > scrJSON_copy.record[i][0]) {
 			for (var j = 9; j >= i; j--) {
-				scrJSON_copy[j+1] = [scrJSON_copy[j][0], scrJSON_copy[j][1]];
+				scrJSON_copy.record[j+1] = [scrJSON_copy.record[j][0], scrJSON_copy.record[j][1]];
 			}
-			scrJSON_copy[i] = [int(myscore), alpJSON.name];
+			scrJSON_copy.record[i] = [int(myscore), alpJSON.name];
 			myrank = i;
 			break;
 		}

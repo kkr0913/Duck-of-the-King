@@ -1,4 +1,4 @@
-var json_url = 'https://api.jsonserve.com/KqcIKT';
+var json_url = 'https://api.jsonbin.io/v3/b/65b1be961f5677401f24d7d0';
 var scrJSON;
 var scrJSON_copy;
 var bg;
@@ -54,16 +54,12 @@ var objJSON = {};
 var obsJSON = {};
 var enmJSON = {};
 var alpJSON = { 0: 65, 1: 65, 2: 65, 'name': 'AAA' }
-var initial_scores = { '1': [9999, 'NYU'], '2': [8888, 'AAA'], '3': [7777, 'AAA'], '4': [6666, 'AAA'], '5': [5555, 'AAA'], '6': [4444, 'AAA'], '7': [3333, 'AAA'], '8': [2222, 'AAA'], '9': [1111, 'AAA'], '10': [0, 'AAA'] };
 
 
 function preload() {
 	// External JSON for the Top Ranks
-	scrJSON = loadJSON(json_url, function() {
-		scrJSON_copy = scrJSON;
-		rdy = true;
-		if (rdy) { resetJSON(); }
-	});
+	reloadJSON();
+	rdy = true;
 	
 	// Font
 	arcadeFont = loadFont('assets\\font\\ARCADECLASSIC.otf');
@@ -466,10 +462,8 @@ function keyPressed() {
 		if (admin) {
 			if (string == 'reset') { game.reset(); }
 			if (string == 'die') { loadJSON(json_url, reloadJSON); game.physics.removeForce(); mylife = 0; game.dead_t0 = millis(); game.dead_h0 = game.pos.y; over.play(); }
-// 			if (string == 'gg') { loadJSON(json_url, reloadJSON); gg = true; rankUpdated = false; }
 			if (string == 'dulk') { greenworld = true; game.hand.getGreenT = true; woww.play(); }
 			if (string == 'ouch') { game.inv_t0 = millis(); ouch.play(); }
-// 			if (string == 'chrlghk') { updateJSON(json_url, initial_scores); loadJSON(json_url, reloadJSON); }
 		}
 		string = '';
 	}
@@ -604,45 +598,29 @@ function muteAll() {
 }
 
 
-// - - - Update External JSON with jQuery - - - //
+// - - - Update External JSON - - - //
 function updateJSON(url, json) {
 	var obj = json;
 	var data = JSON.stringify(obj);
-	$.ajax(
-		{
-			url:url,
-			type:"PUT",
-			data: data,
-			contentType:"application/json; charset=utf-8",
-			dataType:"json",
-			success: function(data, textStatus, jqXHR){
-			}
+	let req = new XMLHttpRequest();
+
+	req.onreadystatechange = () => {
+		if (req.readyState == XMLHttpRequest.DONE) {
+			console.log("Status Code:", req.status);
+			console.log("Response Text:", req.responseText);
 		}
-	);
+	};
+
+	req.open("PUT", url, true);
+	req.setRequestHeader("Content-Type", "application/json");
+	req.setRequestHeader("X-Master-Key", "$2a$10$TYAhcnykzAOKFB/EsJNOuugBO1bzvSnrIqkEE4FMKij2QyiEpCT96");
+	req.send(data);
 }
-
-
-// - - - Check JSON - - - //
-function resetJSON() {
-	var bool = false;
-		
-	for (var i = 1; i < 11; i++) {
-		if ((Object.keys(scrJSON).length != 10) || (typeof scrJSON[i] == 'undefined') || (typeof scrJSON[i][0] != 'number') || (typeof scrJSON[i][1] != 'string')) {
-			bool = true;
-			break;
-		}
-		else if ((str(scrJSON[i][0]).length > 6) || (scrJSON[i][1].length != 3)) {
-			bool = true;
-			break;
-		}
-	}
-	
-	if (bool) { updateJSON(json_url, initial_scores); console.log('JSON has been corrupted. Resetting JSON to initial value'); }
-}
-
 
 // - - - Reload JSON - - - //
-function reloadJSON(json) {
-	scrJSON_copy = json;
+function reloadJSON() {
+	scrJSON = loadJSON(json_url, function() {
+		scrJSON_copy = scrJSON;
+	});
 	up2date = true;
 }
